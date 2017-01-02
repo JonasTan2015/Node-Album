@@ -1,8 +1,12 @@
-const {mongoose} = require('./mongoose');
+require('../config');
+
+const userCollection=require('mongoose');
 const validator = require('validator');
 const _ = require('lodash');
 
-var UserSchema = new mongoose.Schema({
+userCollection.connect(process.env.SESSION_URI);
+
+var UserSchema = new userCollection.Schema({
   email: {
     type: String,
     required: true,
@@ -21,6 +25,11 @@ var UserSchema = new mongoose.Schema({
   }
 });
 
-var User = mongoose.model('User', UserSchema);
+var User = userCollection.model('User', UserSchema);
 
+User.find().then((todos) => {
+    console.log({todos});
+  }, (e) => {
+    console.log(e);
+  });
 module.exports = {User};

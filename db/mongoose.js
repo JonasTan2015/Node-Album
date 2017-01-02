@@ -1,6 +1,13 @@
-var mongoose = require('mongoose');
+var userCollection = require('mongoose');
 
-mongoose.Promise = global.Promise;
-mongoose.connect(process.env.MONGODB_URI);
+userCollection.Promise = global.Promise;
+userCollection.connect(process.env.MONGODB_URI);
 
-module.exports = {mongoose};
+
+var sessionCollection = require('mongoose');
+sessionCollection.Promise = global.Promise;
+sessionCollection.connect(process.env.SESSION_URI);
+module.exports = {
+  userCollection:userCollection,
+  sessionCollection:sessionCollection
+};
