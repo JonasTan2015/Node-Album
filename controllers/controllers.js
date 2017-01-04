@@ -1,6 +1,11 @@
 var DB = require("../services/DatabaseServices");
 
 var authCtrl = function(req,res){
+	if(req.body.email===undefined||req.body.email===""||req.body.password===undefined||req.body.password==="")
+		return res.json({
+                    type: false,
+                    data: "Incorrect email/password"
+                });
 	DB.authenticateUser(req.body.email, req.body.password, function(err, user) {
         if (err) {
             res.json({
@@ -58,9 +63,9 @@ var authCtrl = function(req,res){
 }*/
 
 var signupCtrl = function(req,res){
-	if(!req.body.email)return res.json({
+	if(!req.body.email||!req.body.password)return res.json({
 		type:false,
-		data: "Email is required"
+		data: "Email and password required"
 	});
 	
 	DB.findByEmail(req.body.email).then(function(user){
@@ -79,7 +84,7 @@ var signupCtrl = function(req,res){
                             token: user.token
                         });
 	}).catch(function(err){
-		if(err.message==="User already exists");
+		if(err.message==="User already exists")
 		return res.json({
                     type: false,
                     data: "User already exists!"

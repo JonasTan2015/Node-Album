@@ -13,7 +13,7 @@ process.env.JWT_SECRET="secret";
 const port = 3000;
 
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json());
+//app.use(bodyParser.json());
 app.use(function(req, res, next) {
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST');
@@ -22,12 +22,13 @@ app.use(function(req, res, next) {
 });
 
 //signin page
-app.post('/authenticate',controllers.authCtrl);
+app.post('/authenticate',bodyParser.json(),controllers.authCtrl);
 
 //create new account page
-app.post('/signin', controllers.signupCtrl);
+app.post('/signin', bodyParser.json(),controllers.signupCtrl);
 
-app.get('/me', controllers.ensureAuthorized, function(req, res) {
+app.get('/me', bodyParser.json(),controllers.ensureAuthorized, function(req, res) {
+	console.log(req.url);
     return res.send("Token found");
 });
 
@@ -41,3 +42,6 @@ process.on('uncaughtException', function(err) {
 app.listen(port, function () {
     console.log( "Express server listening on port " + port);
 });
+
+
+module.exports.app=app;
