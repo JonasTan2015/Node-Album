@@ -1,0 +1,15 @@
+ <div class="container">
+
+        <div class="panel panel-default">
+          <div class="panel-body">
+            <span class="glyphicon glyphicon-cloud-upload" style="font-size:small">File Uploader</span>
+            
+            <div class="progress">
+              <div class="progress-bar" role="progressbar"></div>
+            </div>
+			<input id="upload-input" type="file" name="uploads[]" id="file" multiple="multiple"  onchange="angular.element(this).scope().onFileSelected(this.files)"></br>
+          </div>
+		  <a class="btn btn-default" onclick="angular.element(this).scope().onUpload()">Upload</a>
+        </div>
+ 
+  </div>

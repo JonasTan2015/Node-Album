@@ -125,10 +125,12 @@ var ensureAuthorized=function(req,res,next){
 	if(!bearerToken)return res.send("Token format wrong");
 	var promise = DB.findByToken(bearerToken);
 	promise.then(function(doc){
-		//console.log(doc);
+		
 		if(!doc){
 			return res.send(403);
 		}else{
+			
+			req.headers["Email"]=doc.email;
 			next();
 		}
 	});
